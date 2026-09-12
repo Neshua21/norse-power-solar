@@ -64,7 +64,7 @@ function buildApps(){document.getElementById("apps").innerHTML=appliances.map((a
 function showLead(){let any=[...document.querySelectorAll('#apps input[type=checkbox]')].some(x=>x.checked);if(!any)return alert("Please select at least one appliance.");document.getElementById("loads").classList.add("hidden");document.getElementById("lead").classList.remove("hidden");scrollTo(0,0)}
 function finish(){let n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),area=document.getElementById("area").value.trim();if(!n||!p||!area){document.getElementById("err").textContent="Please complete your name, WhatsApp number and area.";return}
 let daily=0,peak=0,items=[];appliances.forEach((a,i)=>{if(document.getElementById("c"+i).checked){let w=+document.getElementById("w"+i).value||a[1],h=+document.getElementById("h"+i).value||0;daily+=w*h;peak+=w;items.push(a[0]+": "+w+"W × "+h+"h")}});
-let diversity=A.site==="Commercial / industrial"?.75:A.site==="Business"?.8:.65,designPeak=peak*diversity;
+let diversity=A.site==="Commercial / industrial" ? 0.75 : A.site==="Business" ? 0.8 : 0.65,designPeak=peak*diversity;
 let autonomy=A.backup==="2–4 hours"?3:A.backup==="4–8 hours"?6:A.backup==="8–12 hours"?10:A.backup==="12+ hours"?14:20;
 let batt=Math.max(2,Math.ceil((designPeak*autonomy/1000)/.85));if(A.backup==="Full off-grid")batt=Math.max(batt,Math.ceil(daily/.85));
 let pv=Math.max(1,Math.ceil((daily/(5*.8))/1000));if(A.goal==="Off-grid independence"||A.backup==="Full off-grid")pv=Math.ceil(pv*1.2);
