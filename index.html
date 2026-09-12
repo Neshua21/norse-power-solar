@@ -53,7 +53,7 @@ const appliances=[
 ];
 let step=0,A={};
 function render(){let x=questions[step],v=A[x.k];document.getElementById("bar").style.width=((step+1)/questions.length*100)+"%";
-document.getElementById("qbox").innerHTML='<div class="q">'+x.q+'</div><p class="hint">Choose one.</p><div class="grid">'+x.o.map(o=>'<div class="choice '+(v===o?'sel':'')+'" onclick="pick('+JSON.stringify(o)+')">'+o+'</div>').join("")+'</div>';
+document.getElementById("qbox").innerHTML='<div class="q">'+x.q+'</div><p class="hint">Choose one.</p><div class="grid">'+x.o.map(o=>'<div class="choice '+(v===o?'sel':'')+'" onclick=\'pick('+JSON.stringify(o)+')\'>'+o+'</div>').join("")+'</div>';
 document.getElementById("back").classList.toggle("hidden",step===0);document.getElementById("next").textContent=step===questions.length-1?"Continue to appliances":"Continue"}
 function pick(v){A[questions[step].k]=v;render()}
 function goNext(){if(!A[questions[step].k])return alert("Please choose an option.");if(step<questions.length-1){step++;render();scrollTo(0,0)}else showLoads()}
@@ -81,4 +81,4 @@ document.getElementById("out").innerHTML='<div class="result"><div>Estimated dai
 let msg='SOLAR ASSESSMENT REQUEST\\n\\nName: '+n+'\\nWhatsApp: '+p+'\\nArea: '+area+'\\n\\nEstimated daily use: '+daily.toFixed(1)+' kWh\\nSolar: '+pv+' kWp class\\nBattery: '+batt+' kWh class\\nInverter: '+inv.toFixed(1)+' kVA+ class\\nPanels: ~'+panels+' x 550W\\nSystem: '+type+'\\n\\nAppliances:\\n'+items.join('\\n')+'\\n\\nAnswers:\\n'+Object.entries(A).map(x=>x[0]+': '+x[1]).join('\\n');
 document.getElementById("wa").href="https://wa.me/254748759101?text="+encodeURIComponent(msg);scrollTo(0,0)}
 render();
-</script></body></html>
+</script></body></html>>
