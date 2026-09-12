@@ -84,7 +84,58 @@ document.getElementById("out").innerHTML=
 '<div class="nextsteps"><h3>What happens next?</h3><div>✓ <b>Norse Power reviews your assessment.</b></div><div>✓ We confirm actual appliance ratings and peak/surge demand.</div><div>✓ We assess the installation site, roof/ground space and shading.</div><div>✓ We prepare a final system design and quotation.</div></div>'+
 '<div class="warn">⚠️ This is a preliminary screening estimate, not a final engineering design. Pumps, fridges, compressors, cookers and other motor/heating loads may require additional surge capacity.</div>'+
 '<p class="sharebox">Ready to discuss your system? Send this assessment to Norse Power on WhatsApp.</p>';
-let msg='SOLAR ASSESSMENT REQUEST\\n\\nName: '+n+'\\nWhatsApp: '+p+'\\nArea: '+area+'\\n\\nEstimated daily use: '+daily.toFixed(1)+' kWh\\nSolar: '+pv+' kWp class\\nBattery: '+batt+' kWh class\\nInverter: '+inv.toFixed(1)+' kVA+ class\\nPanels: ~'+panels+' x 550W\\nSystem: '+type+'\\n\\nAppliances:\\n'+items.join('\\n')+'\\n\\nAnswers:\\n'+Object.entries(A).map(x=>x[0]+': '+x[1]).join('\\n');
+let now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0"),leadId="NP-"+stamp+"-"+String(Math.floor(Math.random()*10000)).padStart(4,"0");
+let msg=[
+"☀️ NORSE POWER LIMITED",
+"SOLAR ASSESSMENT LEAD",
+"━━━━━━━━━━━━━━━━━━━━",
+"",
+"🆔 LEAD",
+"Reference: "+leadId,
+"Date: "+now.toLocaleDateString(),
+"",
+"👤 CUSTOMER",
+"Name: "+n,
+"WhatsApp: "+p,
+"Location: "+area,
+"",
+"🏠 PROPERTY & GOAL",
+"Property: "+(A.site||"Not specified"),
+"Goal: "+(A.goal||"Not specified"),
+"Monthly bill: "+(A.bill||"Not specified"),
+"Preferred system: "+(A.system||"Not specified"),
+"Backup requested: "+(A.backup||"Not specified"),
+"Main usage time: "+(A.usage||"Not specified"),
+"",
+"⚡ LOAD PROFILE",
+"Estimated daily energy: "+daily.toFixed(1)+" kWh",
+"Estimated peak load: "+(peak/1000).toFixed(2)+" kW",
+"",
+"☀️ PRELIMINARY SYSTEM",
+"Solar PV: "+pv+" kWp",
+"Battery: "+batt+" kWh",
+"Inverter: "+inv.toFixed(1)+" kVA+",
+"Panels: ~"+panels+" × 550W",
+"System approach: "+type,
+"",
+"📋 APPLIANCES",
++(items.length?items.map(x=>"• "+x).join("\n"):"• No appliances selected"),
+"",
+"📝 CUSTOMER ANSWERS",
+"Property: "+(A.site||"Not specified"),
+"Goal: "+(A.goal||"Not specified"),
+"Monthly bill: "+(A.bill||"Not specified"),
+"Backup: "+(A.backup||"Not specified"),
+"Usage: "+(A.usage||"Not specified"),
+"System preference: "+(A.system||"Not specified"),
+"",
+"⚠️ PRELIMINARY ASSESSMENT",
+"This is a screening estimate, not a final engineering design.",
+"Please verify actual appliance ratings, surge demand, site conditions, shading and equipment compatibility before final sizing.",
+"",
+"📞 ACTION",
+"Customer has completed the Norse Power solar assessment and is requesting follow-up / quotation."
+].join("\n");
 document.getElementById("wa").href="https://wa.me/254748759101?text="+encodeURIComponent(msg);scrollTo(0,0)}
 render();
 </script></body></html>
