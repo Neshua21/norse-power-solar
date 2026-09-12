@@ -14,7 +14,7 @@
 .btn{border:0;border-radius:14px;padding:14px 18px;font-weight:850;font-size:15px;cursor:pointer}.primary{background:var(--g);color:#fff;flex:1}.secondary{background:#edf2ef;color:var(--g)}.nav{display:flex;gap:8px;margin-top:18px}
 .hidden{display:none!important}input{width:100%;padding:13px;border:2px solid var(--line);border-radius:12px;font-size:16px;margin:5px 0 10px;background:#fff}
 .appliance{border:1px solid var(--line);border-radius:15px;padding:12px;margin:9px 0}.apphead{display:flex;align-items:center;gap:9px;font-weight:800}.apphead input{width:auto;margin:0}.appgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.appgrid input{padding:10px;margin:0}
-.result{background:#f4faf5;border-radius:15px;padding:15px;margin:10px 0}.result strong{font-size:21px;color:var(--g)}.muted{font-size:12px;color:var(--muted)}
+.resultgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.metric{background:#f4faf5;border:1px solid #dfeae2;border-radius:16px;padding:14px}.metric .label{font-size:12px;color:var(--muted);font-weight:750;margin-bottom:5px}.metric strong{display:block;font-size:21px;color:var(--g);line-height:1.15}.metric .sub{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.35}.resultintro{background:linear-gradient(135deg,#0b2b1e,#164c35);color:#fff;border-radius:18px;padding:17px;margin:12px 0}.resultintro h3{margin:0 0 5px;font-size:19px}.resultintro p{margin:0;color:#dbe9e1;font-size:13px;line-height:1.45}.nextsteps{background:#f7fbf8;border:1px solid #dfeae2;border-radius:16px;padding:15px;margin:12px 0}.nextsteps h3{margin:0 0 8px;color:var(--g);font-size:16px}.nextsteps div{font-size:13px;margin:7px 0}.wa{box-shadow:0 7px 18px #25d36635}.sharebox{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}.muted{font-size:12px;color:var(--muted)}@media(max-width:520px){.resultgrid{grid-template-columns:1fr 1fr}.metric strong{font-size:19px}}
 .wa{display:block;text-decoration:none;background:#25d366;color:#062112;text-align:center;padding:15px;border-radius:14px;font-weight:900;margin-top:12px}
 .warn{background:#fff8e7;border-left:4px solid var(--gold);padding:12px;border-radius:10px;font-size:13px;line-height:1.45}.fine{font-size:11px;color:var(--muted);line-height:1.5}
 </style></head><body><div class="wrap">
@@ -71,14 +71,20 @@ let pv=Math.max(1,Math.ceil((daily/(5*.8))/1000));if(A.goal==="Off-grid independ
 let inv=Math.max(1.5,Math.ceil((designPeak/1000)*1.25*2)/2),panels=Math.ceil(pv*1000/550);
 let type=A.system==="Recommend for me"?(A.goal==="Lower electricity bills"&&A.backup!=="Full off-grid"?"Hybrid / grid-assist":"Hybrid solar + battery"):A.system;
 document.getElementById("lead").classList.add("hidden");document.getElementById("result").classList.remove("hidden");
-document.getElementById("out").innerHTML='<div class="result"><div>Estimated daily energy</div><strong>'+daily.toFixed(1)+' kWh/day</strong><div class="muted">≈ '+(daily*30).toFixed(0)+' kWh/month from entered usage.</div></div>'+
-'<div class="result"><div>Recommended solar array</div><strong>'+pv+' kWp class</strong><div class="muted">Preliminary estimate using ~5 peak-sun-hours/day and an 80% system factor.</div></div>'+
-'<div class="result"><div>Battery storage</div><strong>'+batt+' kWh class</strong><div class="muted">Based on estimated load and requested backup.</div></div>'+
-'<div class="result"><div>Inverter</div><strong>'+inv.toFixed(1)+' kVA+ class</strong><div class="muted">Preliminary peak-load estimate with margin.</div></div>'+
-'<div class="result"><div>Panels</div><strong>About '+panels+' × 550W</strong><div class="muted">Actual count depends on the selected module.</div></div>'+
-'<div class="result"><div>System approach</div><strong>'+type+'</strong></div>'+
-'<div class="warn">⚠️ Pumps, fridges, compressors and cooking equipment can have high startup/surge demand. Norse Power should verify these before installation.</div>';
+document.getElementById("out").innerHTML=
+'<div class="resultintro"><h3>Here is your preliminary solar plan</h3><p>Based on the appliances and usage you entered, this gives Norse Power a starting point for your quotation and site assessment.</p></div>'+
+'<div class="resultgrid">'+
+'<div class="metric"><div class="label">DAILY ENERGY</div><strong>'+daily.toFixed(1)+' kWh</strong><div class="sub">Estimated daily consumption</div></div>'+
+'<div class="metric"><div class="label">SOLAR ARRAY</div><strong>'+pv+' kWp</strong><div class="sub">Preliminary PV size</div></div>'+
+'<div class="metric"><div class="label">BATTERY</div><strong>'+batt+' kWh</strong><div class="sub">Based on requested backup</div></div>'+
+'<div class="metric"><div class="label">INVERTER</div><strong>'+inv.toFixed(1)+' kVA+</strong><div class="sub">Preliminary peak-load class</div></div>'+
+'<div class="metric"><div class="label">PANELS</div><strong>~'+panels+' × 550W</strong><div class="sub">Approximate panel count</div></div>'+
+'<div class="metric"><div class="label">SYSTEM</div><strong>'+type+'</strong><div class="sub">Recommended approach</div></div>'+
+'</div>'+
+'<div class="nextsteps"><h3>What happens next?</h3><div>✓ <b>Norse Power reviews your assessment.</b></div><div>✓ We confirm actual appliance ratings and peak/surge demand.</div><div>✓ We assess the installation site, roof/ground space and shading.</div><div>✓ We prepare a final system design and quotation.</div></div>'+
+'<div class="warn">⚠️ This is a preliminary screening estimate, not a final engineering design. Pumps, fridges, compressors, cookers and other motor/heating loads may require additional surge capacity.</div>'+
+'<p class="sharebox">Ready to discuss your system? Send this assessment to Norse Power on WhatsApp.</p>';
 let msg='SOLAR ASSESSMENT REQUEST\\n\\nName: '+n+'\\nWhatsApp: '+p+'\\nArea: '+area+'\\n\\nEstimated daily use: '+daily.toFixed(1)+' kWh\\nSolar: '+pv+' kWp class\\nBattery: '+batt+' kWh class\\nInverter: '+inv.toFixed(1)+' kVA+ class\\nPanels: ~'+panels+' x 550W\\nSystem: '+type+'\\n\\nAppliances:\\n'+items.join('\\n')+'\\n\\nAnswers:\\n'+Object.entries(A).map(x=>x[0]+': '+x[1]).join('\\n');
 document.getElementById("wa").href="https://wa.me/254748759101?text="+encodeURIComponent(msg);scrollTo(0,0)}
 render();
-</script></body></html>>
+</script></body></html>
